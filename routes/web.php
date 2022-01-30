@@ -26,3 +26,5 @@ Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/page/{page}', [PostController::class, 'paginate'])->name('posts.paginate');
 Route::post('/posts',[PostController::class, 'store'])->name('posts.store');
 Route::delete('/posts/{post}/delete', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::get('/posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
+Route::delete('/posts/{post}/force_delete', [PostController::class, 'force_destroy'])->name('posts.force_destroy');
