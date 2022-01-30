@@ -53,7 +53,16 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index() {
-        $posts = Post::all();
+        $posts = Post::paginate(3);
+        return view("posts.index", [
+            'posts' => $posts
+        ]);
+    }
+
+    public function paginate($page) {
+        $per_page = 3;
+        $posts = Post::paginate($per_page, ['*'], 'page', $page);
+        // array_slice($posts, -3, 3, true);
         return view("posts.index", [
             'posts' => $posts
         ]);
@@ -69,26 +78,38 @@ class PostController extends Controller
     public function store(){
         $data = request()->all();
         // dd($data);
-        Post::create([
-            'title' => $data['title'],
-            'description' => $data['description'],
-            'user_id' => $data['post_creator'],
-        ]);
+        if(isset($data['id'])) {
+            Post::where('id', $data['id'])->update([
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'user_id' => $data['post_creator'],
+            ]);
+        } else {
+
+            Post::create([
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'user_id' => $data['post_creator'],
+            ]);
+        }
         return redirect()->route('posts.index');
     }
 
 
     public function show($postId){
-        return view('posts.show', ['post'=> Post::find($postId)]);
+        $post = Post::find($postId);
+        return view('posts.show', ['post'=> $post]);
     }
 
     public function edit($postId){
-        return view('posts.create' , ['post'=>Post::find($postId)]);
+        $users = User::all();
+        $post = Post::find($postId);
+        return view('posts.create' , ['post'=>$post, 'users'=> $users]);
     }
 
 
     public function destroy($postId) {
-         Post::delete($postId);
+        //  Post::delete($postId);
         return redirect()->route('posts.index');    
     }
 
