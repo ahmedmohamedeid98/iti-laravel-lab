@@ -35,7 +35,7 @@
         </div>
         <div>
           <span class="h6">Created At</span>
-          <span> :- {{$post->created_at}}</span>
+          <span> :- {{$post->created_at->isoFormat("dddd Do of MMMM YYYY h:mm:ss A")}}</span>
         </div>
     
     </div>

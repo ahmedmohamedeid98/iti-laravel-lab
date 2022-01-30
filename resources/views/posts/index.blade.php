@@ -23,7 +23,7 @@
             <th scope="row">{{ $post->id }}</th>
             <td>{{ $post->title }}</td>
             <td>{{ $post->user->name }}</td>
-            <td>{{ $post->created_at }}</td>
+            <td>{{ $post->created_at->isoFormat('YYYY-MM-DD') }}</td>
             <td class="d-flex">
                 <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info me-1">View</a>
                 <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary me-1">Edit</a>
