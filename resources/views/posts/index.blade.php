@@ -24,10 +24,15 @@
             <td>{{ $post->title }}</td>
             <td>{{ $post->user->name }}</td>
             <td>{{ $post->created_at }}</td>
-            <td>
-                <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info">View</a>
-                <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary">Edit</a>
-                <a href="{{ route('posts.destroy', ['post'=>$post['id']]) }}" class="btn btn-danger">Delete</a>
+            <td class="d-flex">
+                <a href="{{ route('posts.show', ['post' => $post['id']]) }}" class="btn btn-info me-1">View</a>
+                <a href="{{ route('posts.edit', ['post' => $post['id']]) }}" class="btn btn-primary me-1">Edit</a>
+                <form action="{{ route('posts.destroy', ['post'=> $post->id] )}}" method="post">
+                  @csrf
+                  @method('delete')
+                  <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</button>
+                </form>
+
             </td>
         </tr>
         @endforeach
@@ -42,35 +47,10 @@
         <li class="page-item"><a class="page-link" href="{{ route('posts.paginate', ['page'=>5]) }}">Next</a></li>
     </ul>
 </nav>
-<div class="container">
 
-    <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" id="alertbox">Click here</button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-                <div class="modal-body">
-                    <p id="error"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-</div>
 @endsection
 
 @section('script')
-<script src="{{ URL::asset('js/index.js') }}" type="text/javascript"></script> -->
+<!-- <script src="{{ URL::asset('js/index.js') }}" type="text/javascript"></script> -->
 @endsection

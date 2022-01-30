@@ -62,7 +62,6 @@ class PostController extends Controller
     public function paginate($page) {
         $per_page = 3;
         $posts = Post::paginate($per_page, ['*'], 'page', $page);
-        // array_slice($posts, -3, 3, true);
         return view("posts.index", [
             'posts' => $posts
         ]);
@@ -101,6 +100,7 @@ class PostController extends Controller
         return view('posts.show', ['post'=> $post]);
     }
 
+    
     public function edit($postId){
         $users = User::all();
         $post = Post::find($postId);
@@ -109,8 +109,8 @@ class PostController extends Controller
 
 
     public function destroy($postId) {
-        //  Post::delete($postId);
-        return redirect()->route('posts.index');    
+        Post::where('id', $postId)->delete();
+        return redirect()->route('posts.index');  
     }
 
     
