@@ -34,6 +34,6 @@
                 </select>
             </div>
             
-            <button class="btn btn-success">Create Post</button>
+            <button class="btn {{ isset($post) ? 'btn-primary' : 'btn-success' }}">{{ isset($post) ? 'Update' : 'Create Post' }}</button>
         </form>
 @endsection
