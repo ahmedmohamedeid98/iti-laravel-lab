@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
+use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
-
-use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -34,7 +33,7 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request){
         
-        $data = $request()->all();
+        $data = $request->all();
 
         if(isset($data['id'])) {
             Post::where('id', $data['id'])->update([

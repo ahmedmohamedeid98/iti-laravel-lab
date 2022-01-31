@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Post;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/posts/create',[PostController::class, 'create'])->name('posts.create');
+Route::get('/posts/create',[PostController::class, 'create'])->name('posts.create')->middleware('auth');
 Route::get('/posts/create/{post}',[PostController::class, 'edit'])->name('posts.edit');
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
@@ -28,3 +29,6 @@ Route::post('/posts',[PostController::class, 'store'])->name('posts.store');
 Route::delete('/posts/{post}/delete', [PostController::class, 'destroy'])->name('posts.destroy');
 Route::get('/posts/{post}/restore', [PostController::class, 'restore'])->name('posts.restore');
 Route::delete('/posts/{post}/force_delete', [PostController::class, 'force_destroy'])->name('posts.force_destroy');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
