@@ -15,6 +15,6 @@ class UserSeeder extends Seeder
     public function run()
     {
         // note that we give a post random user_id from 1 to 50
-        User::factory()->count(50)->create(); 
+        User::factory()->count(5)->create(); 
     }
 }

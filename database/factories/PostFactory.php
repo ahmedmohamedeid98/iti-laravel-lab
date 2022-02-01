@@ -16,7 +16,7 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->title(),
             'description' => $this->faker->text(),
-            'user_id' => random_int(1, 50)
+            'user_id' => random_int(1, 5)
         ];
     }
 }
