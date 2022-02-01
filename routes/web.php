@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Post;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -64,3 +65,6 @@ Route::get('/auth/callback', function () {
 
     return redirect('/posts');
 });
+
+Route::get('auth/google', [GoogleController::class, 'auth'])->name('login.google');
+Route::get('auth/google/callback', [GoogleController::class, 'callback']);
