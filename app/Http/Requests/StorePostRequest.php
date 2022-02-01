@@ -33,6 +33,10 @@ class StorePostRequest extends FormRequest
         if($this->old_title != $this->title) {
             $rules['title'] = ['required','min:3', 'unique:posts'];
         }
+
+        if(isset($this->image)) {
+            $rules['image'] = ['mimes:jpg,png', 'max:2048'];
+        }
         
         return $rules;
     }

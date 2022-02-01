@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
 use App\Http\Requests\StorePostRequest;
+use App\Models\Photo;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class PostController extends Controller
 {
@@ -35,13 +38,36 @@ class PostController extends Controller
         
         $data = $request->all();
 
+        // update current post
         if(isset($data['id'])) {
+
+            // update post data
             Post::where('id', $data['id'])->update([
                 'title' => $data['title'],
                 'description' => $data['description'],
                 'user_id' => $data['post_creator'],
             ]);
-        } else {
+
+            // upload image for this post if provided
+            if($request->hasFile('image')) {
+
+                $name = $request->file('image')->getClientOriginalName();
+                // dd(base_path('../'), public_path('images'), URL::asset('public/images'));
+                // dd($request->file('image'));
+                $path = $request->image->store('images');
+                // Storage::put("/public/images/".$name, $data['image']);
+                // $path = Storage::path("public/images/".$name);
+                // ->move(public_path("images/{{$name}}"));
+                
+                Photo::create([
+                    'name'=> $name,
+                    'path'=> $path,
+                    'post_id' => $data['id']
+                ]);
+            }
+        } 
+        // create new post
+        else {
 
             Post::create([
                 'title' => $data['title'],
