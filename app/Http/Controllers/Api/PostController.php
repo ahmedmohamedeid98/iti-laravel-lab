@@ -10,17 +10,17 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index() {
-        
-        $posts = Post::all();
+    public function index(Request $request) {
+        $page = $request->query('page');
+        $posts = [];
+        if(isset($page)) {
+            $posts = Post::with('user')->paginate(5, ['*'], 'page', $page);
+        } else {
+            $posts = Post::with('user')->get();
+        }
         return PostResource::collection($posts);
     }
 
-    public function page($page) {
-        
-        $posts = Post::withTrashed()->paginate(5, ['*'], 'page', $page);
-        return PostResource::collection($posts);
-    }
 
     public function find($postId) {
         $post = Post::find($postId);

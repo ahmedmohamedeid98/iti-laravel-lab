@@ -23,8 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('posts/page/{page}', [PostController::class, 'page'])->middleware('auth:sanctum');
-Route::get('posts', [PostController::class, 'index'])->middleware('auth:sanctum');
+Route::get('posts{page?}', [PostController::class, 'index'])->middleware('auth:sanctum');
 Route::get('posts/{post}', [PostController::class, 'find'])->middleware('auth:sanctum');
 Route::post('posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 
