@@ -11,7 +11,14 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index() {
+        
         $posts = Post::all();
+        return PostResource::collection($posts);
+    }
+
+    public function page($page) {
+        
+        $posts = Post::withTrashed()->paginate(5, ['*'], 'page', $page);
         return PostResource::collection($posts);
     }
 
